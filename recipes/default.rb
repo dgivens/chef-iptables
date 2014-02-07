@@ -26,14 +26,20 @@ rack_nets = [
 ]
 
 ops_node = partial_search(:node, "role:ops-node AND chef_environment:#{node.chef_environment}", :keys => {'ip' => ['cloud', 'public_ipv4']})
+nagios_node = partial_search(:node, "role:monitoring AND chef_environment:#{node.chef_environment}", :keys => {'ip' => ['cloud', 'public_ipv4']})
 ops_node_ip = ops_node.first ? ops_node.first['ip'] : nil
+nagios_node_ip = nagios_node.first ? nagios_node.first['ip'] : nil
 
 template '/etc/network/iptables' do 
     source 'iptables.erb'
     owner 'root'
     group 'root'
     mode 00600
-    variables :rack_nets => rack_nets, :ops_node => ops_node_ip
+    variables({
+      :rack_nets => rack_nets, 
+      :ops_node => ops_node_ip, 
+      :nagios_node => nagios_node_ip
+    })
     action :create
     notifies :run, 'execute[iptables_restore]', :delayed
 end

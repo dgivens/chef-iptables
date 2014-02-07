@@ -27,8 +27,11 @@
 # ops-n01 public IP
 -A INPUT -s <%= @ops_node %> -j ACCEPT
 <% end -%>
+<% if @nagios_node -%>
+# nagios-n01 public IP
+-A INPUT -s <%= @nagios_node %> -j ACCEPT
+<% end -%>
 
-# Poking the holes
 <% if node[:heat_iptables][:allow_ping] -%>
 -A INPUT -p icmp -m icmp --icmp-type 8 -j ACCEPT
 <% end -%>
