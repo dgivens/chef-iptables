@@ -22,8 +22,8 @@
 -A INPUT -p icmpv6 --icmpv6-type neighbor-advertisement -m hl --hl-eq 255 -j ACCEPT
 -A INPUT -p icmpv6 -m icmp6 --icmpv6-type echo-request -j ACCEPT
 
-<% @rules.each do |rule| -%>
--A <%= rule[:chain].upcase %><% if rule[:interface] -%> -i <%= rule[:interface] %><% end -%> <% if rule[:source] -%> -s <%= rule[:source] %><% end -%><% if rule[:destination] -%> -d <%= rule[:destination] %><% end -%><% if rule[:proto] -%> -p <%= rule[:proto] %> -m <%= rule[:proto] %><% end -%><% if rule[:port] -%> --dport <%= rule[:port] %><% end -%> -j <%= rule[:action].upcase %>
+<% @rules.each do |key, rule| -%>
+-A <%= rule[:chain].upcase %><% if rule[:interface] -%> -i <%= rule[:interface] %><% end -%> <% if rule[:source] -%> -s <%= rule[:source] %><% end -%><% if rule[:destination] -%> -d <%= rule[:destination] %><% end -%><% if rule[:protocol] -%> -p <%= rule[:protocol] %> -m <%= rule[:protocol] %><% end -%><% if rule[:port] -%> --dport <%= rule[:port] %><% end -%> -j <%= rule[:action].upcase %>
 <% end -%>
 -A INPUT -j REJECT --reject-with icmp6-adm-prohibited
 COMMIT
