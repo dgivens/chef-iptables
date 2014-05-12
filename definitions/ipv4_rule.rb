@@ -1,4 +1,4 @@
-define :chain, :source, :destination, :port, :protocol, :interface, :action do
+define :name, :chain => 'INPUT', :source => nil, :destination => nil, :port => nil, :protocol => nil, :interface => nil, :action => 'ACCEPT' do
   execute 'iptables_restore' do
     command "/etc/network/if-pre-up.d/iptables"
     action :nothing
