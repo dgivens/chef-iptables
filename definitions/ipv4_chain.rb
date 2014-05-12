@@ -1,4 +1,4 @@
-define :name do
+define :heat_iptables_ipv4_chain do
   execute 'iptables_restore' do
     command "/etc/network/if-pre-up.d/iptables"
     action :nothing

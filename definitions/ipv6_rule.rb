@@ -1,4 +1,4 @@
-define :name, :chain => 'INPUT', :source => nil, :destination => nil, :port => nil, :protocol => nil, :interface => nil, :action => 'ACCEPT' do
+define :heat_iptables_ipv6_rule, :chain => 'INPUT', :source => nil, :destination => nil, :port => nil, :protocol => nil, :interface => nil, :action => 'ACCEPT' do
   execute 'ip6tables_restore' do
     command "/etc/network/if-pre-up.d/ip6tables"
     action :nothing

@@ -1,4 +1,4 @@
-define :name do
+define :heat_iptables_ipv6_chain do
   execute 'ip6tables_restore' do
     command "/etc/network/if-pre-up.d/ip6tables"
     action :nothing
