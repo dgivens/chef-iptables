@@ -6,7 +6,7 @@ define :heat_iptables_ipv6_chain do
 
   t = nil
   begin
-    t = resource(:template => "/etc/network/ip6tables")
+    t = resources(:template => "/etc/network/ip6tables")
   rescue Chef::Exceptions::ResourceNotFound
     t = template "/etc/network/ip6tables" do
       cookbook 'heat-iptables'

@@ -6,7 +6,7 @@ define :heat_iptables_ipv4_rule, :chain => 'INPUT', :source => nil, :destination
 
   t = nil
   begin
-    t = resource(:template => "/etc/network/iptables")
+    t = resources(:template => "/etc/network/iptables")
   rescue Chef::Exceptions::ResourceNotFound
     t = template "/etc/network/iptables" do
       cookbook 'heat-iptables'
