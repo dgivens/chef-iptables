@@ -9,36 +9,17 @@
 :FORWARD ACCEPT [0:0]
 :OUTPUT ACCEPT [0:0]
 
--N RACK
-<% @rack_nets.each do |src| -%>
--A RACK -s <%= src %> -j ACCEPT
+<% @chains.each do |chain| -%>
+-N <%= chain.upcase %>
 <% end -%>
--A RACK -j RETURN 
 
 -A INPUT -i lo -j ACCEPT
 -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
-
-# Internal interfaces to consider safe
-<% node[:heat_iptables][:internal_iface].each do |iface| -%>
--A INPUT -i <%= iface %> -j ACCEPT
-<% end -%>
-
-<% if @ops_node -%>
-# ops-n01 public IP
--A INPUT -s <%= @ops_node %> -j ACCEPT
-<% end -%>
-<% if @nagios_node -%>
-# nagios-n01 public IP
--A INPUT -s <%= @nagios_node %> -j ACCEPT
-<% end -%>
-
-<% if node[:heat_iptables][:allow_ping] -%>
+-A INPUT -i eth2 -j ACCEPT
 -A INPUT -p icmp -m icmp --icmp-type 8 -j ACCEPT
-<% end -%>
-<% node[:heat_iptables][:ipv4][:filter].each do |chain, values| -%>
-<%   values[:rules].each do |rule| -%>
--A <%= chain.upcase %><% if rule[:interface] -%> -i <%= rule[:interface] %><% end -%> <% if rule[:source] -%> -s <%= rule[:source] %><% end -%><% if rule[:destination] -%> -d <%= rule[:destination] %><% end -%><% if rule[:proto] -%> -p <%= rule[:proto] %> -m <%= rule[:proto] %><% end -%><% if rule[:dport] -%> --dport <%= rule[:dport] %><% end -%> -j <%= rule[:action] %>
-<%   end -%>
+
+<% @rules.each do |rule| -%>
+-A <%= rule[:chain].upcase %><% if rule[:interface] -%> -i <%= rule[:interface] %><% end -%> <% if rule[:source] -%> -s <%= rule[:source] %><% end -%><% if rule[:destination] -%> -d <%= rule[:destination] %><% end -%><% if rule[:proto] -%> -p <%= rule[:proto] %> -m <%= rule[:proto] %><% end -%><% if rule[:port] -%> --dport <%= rule[:port] %><% end -%> -j <%= rule[:action].upcase %>
 <% end -%>
 -A INPUT -j REJECT --reject-with icmp-port-unreachable
 COMMIT

@@ -8,25 +8,22 @@
 :INPUT ACCEPT [0:0]
 :FORWARD ACCEPT [0:0]
 :OUTPUT ACCEPT [0:0]
+
+<% @chains.each do |chain| -%>
+-N <%= chain.upcase %>
+<% end -%>
+
 -A INPUT -i lo -j ACCEPT
 -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+-A INPUT -i eth2 -j ACCEPT
+
 -A INPUT -m rt --rt-type 0 -j DROP
 -A INPUT -p icmpv6 --icmpv6-type neighbor-solicitation -m hl --hl-eq 255 -j ACCEPT
 -A INPUT -p icmpv6 --icmpv6-type neighbor-advertisement -m hl --hl-eq 255 -j ACCEPT
-
-# Internal interfaces to consider safe
-<% node[:heat_iptables][:internal_iface].each do |iface| -%>
--A INPUT -i <%= iface %> -j ACCEPT
-<% end -%>
-
-# Poking the holes
-<% if node[:heat_iptables][:allow_ping] -%>
 -A INPUT -p icmpv6 -m icmp6 --icmpv6-type echo-request -j ACCEPT
-<% end -%>
-<% node[:heat_iptables][:ipv6][:filter].each do |chain, values| -%>
-<%   values[:rules].each do |rule| -%>
--A <%= chain.upcase %><% if rule[:interface] -%> -i <%= rule[:interface] %><% end -%> <% if rule[:source] -%> -s <%= rule[:source] %><% end -%><% if rule[:destination] -%> -d <%= rule[:destination] %><% end -%><% if rule[:proto] -%> -p <%= rule[:proto] %> -m <%= rule[:proto] %><% end -%><% if rule[:dport] -%> --dport <%= rule[:dport] %><% end -%> -j <%= rule[:action] %>
-<%   end -%>
+
+<% @rules.each do |rule| -%>
+-A <%= rule[:chain].upcase %><% if rule[:interface] -%> -i <%= rule[:interface] %><% end -%> <% if rule[:source] -%> -s <%= rule[:source] %><% end -%><% if rule[:destination] -%> -d <%= rule[:destination] %><% end -%><% if rule[:proto] -%> -p <%= rule[:proto] %> -m <%= rule[:proto] %><% end -%><% if rule[:port] -%> --dport <%= rule[:port] %><% end -%> -j <%= rule[:action].upcase %>
 <% end -%>
 -A INPUT -j REJECT --reject-with icmp6-adm-prohibited
 COMMIT
