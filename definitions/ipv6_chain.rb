@@ -1,4 +1,4 @@
-define :heat_iptables_ipv6_chain do
+define :iptables_ipv6_chain do
   execute 'ip6tables_restore' do
     command "/etc/network/if-pre-up.d/ip6tables"
     action :nothing
@@ -9,7 +9,7 @@ define :heat_iptables_ipv6_chain do
     t = resources(:template => "/etc/network/ip6tables")
   rescue Chef::Exceptions::ResourceNotFound
     t = template "/etc/network/ip6tables" do
-      cookbook 'heat-iptables'
+      cookbook 'iptables'
       source 'ip6tables.erb'
       owner 'root'
       group 'root'

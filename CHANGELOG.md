@@ -1,10 +1,10 @@
-# CHANGELOG for heat-iptables
+# CHANGELOG for iptables
 
-This file is used to list changes made in each version of heat-iptables.
+This file is used to list changes made in each version of iptables.
 
 ## 0.1.0:
 
-* Initial release of heat-iptables
+* Initial release of iptables
 
 - - -
 Check the [Markdown Syntax Guide](http://daringfireball.net/projects/markdown/syntax) for help with Markdown.

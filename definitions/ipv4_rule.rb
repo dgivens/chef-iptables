@@ -1,4 +1,4 @@
-define :heat_iptables_ipv4_rule, :chain => 'INPUT', :source => nil, :destination => nil, :port => nil, :protocol => nil, :interface => nil, :action => 'ACCEPT' do
+define :iptables_ipv4_rule, :chain => 'INPUT', :source => nil, :destination => nil, :port => nil, :protocol => nil, :interface => nil, :action => 'ACCEPT' do
   execute 'iptables_restore' do
     command "/etc/network/if-pre-up.d/iptables"
     action :nothing
@@ -9,7 +9,7 @@ define :heat_iptables_ipv4_rule, :chain => 'INPUT', :source => nil, :destination
     t = resources(:template => "/etc/network/iptables")
   rescue Chef::Exceptions::ResourceNotFound
     t = template "/etc/network/iptables" do
-      cookbook 'heat-iptables'
+      cookbook 'iptables'
       source 'iptables.erb'
       owner 'root'
       group 'root'

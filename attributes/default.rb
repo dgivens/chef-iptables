@@ -1,11 +1,11 @@
 #
-# Cookbook Name:: heat-iptables
+# Cookbook Name:: iptables
 # Attributes:: default
 #
 
-default[:heat_iptables][:allow_ping] = true
-default[:heat_iptables][:internal_iface] = ['eth2']
-default[:heat_iptables][:ipv4] = {
+default[:iptables][:allow_ping] = true
+default[:iptables][:internal_iface] = ['eth2']
+default[:iptables][:ipv4] = {
   :filter => {
     :input => {
       :policy => 'ACCEPT',
@@ -21,7 +21,7 @@ default[:heat_iptables][:ipv4] = {
     }
   }
 }
-default[:heat_iptables][:ipv6] = {
+default[:iptables][:ipv6] = {
   :filter => {
     :input => {
       :policy => 'ACCEPT',
@@ -40,4 +40,4 @@ default[:heat_iptables][:ipv6] = {
 
 # Example rule
 #
-# default['heat-iptables']['tables']['filter']['input']['rules'] = [{'interface' => 'eth0', 'source' => '192.168.1.0/24', 'destination' => '192.168.2.0/24', 'dport' => '80', 'proto' => 'tcp', 'action' => 'ACCEPT'}]
+# default['iptables']['tables']['filter']['input']['rules'] = [{'interface' => 'eth0', 'source' => '192.168.1.0/24', 'destination' => '192.168.2.0/24', 'dport' => '80', 'proto' => 'tcp', 'action' => 'ACCEPT'}]

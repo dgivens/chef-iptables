@@ -23,5 +23,5 @@ platforms:
 
 suites:
 - name: default
-  run_list: ["recipe[heat-iptables]"]
+  run_list: ["recipe[iptables_test]"]
   attributes: {}
