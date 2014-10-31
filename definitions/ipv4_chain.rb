@@ -1,12 +1,12 @@
 define :iptables_ipv4_chain do
   execute 'iptables_restore' do
-    command "/etc/network/if-pre-up.d/iptables"
+    command '/etc/network/if-pre-up.d/iptables'
     action :nothing
   end
 
   t = nil
   begin
-    t = resources(:template => "/etc/network/iptables")
+    t = resources(:template => '/etc/network/iptables')
   rescue Chef::Exceptions::ResourceNotFound
     t = template "/etc/network/iptables" do
       cookbook 'iptables'
