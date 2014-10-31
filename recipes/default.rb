@@ -11,7 +11,7 @@ cookbook_file '/etc/network/if-pre-up.d/iptables' do
     source "iptables"
     owner 'root'
     group 'root'
-    mode 00700
+    mode '0700'
     action :create
 end
 
@@ -19,6 +19,6 @@ cookbook_file '/etc/network/if-pre-up.d/ip6tables' do
     source "ip6tables"
     owner 'root'
     group 'root'
-    mode 00700
+    mode '0700'
     action :create
 end

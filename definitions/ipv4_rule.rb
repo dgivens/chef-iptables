@@ -13,7 +13,7 @@ define :heat_iptables_ipv4_rule, :chain => 'INPUT', :source => nil, :destination
       source 'iptables.erb'
       owner 'root'
       group 'root'
-      mode 600
+      mode '0600'
       variables({
         :rules => {},
         :chains => []

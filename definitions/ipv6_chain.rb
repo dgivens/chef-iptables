@@ -13,7 +13,7 @@ define :heat_iptables_ipv6_chain do
       source 'ip6tables.erb'
       owner 'root'
       group 'root'
-      mode 600
+      mode '0600'
       variables({
         :rules => {},
         :chains => []

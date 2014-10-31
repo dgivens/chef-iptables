@@ -8,12 +8,12 @@ define :heat_iptables_ipv6_rule, :chain => 'INPUT', :source => nil, :destination
   begin
     t = resources(:template => "/etc/network/ip6tables")
   rescue Chef::Exceptions::ResourceNotFound
-    t = template "/etc/network/iptables" do
+    t = template "/etc/network/ip6tables" do
       cookbook 'heat-iptables'
       source 'ip6tables.erb'
       owner 'root'
       group 'root'
-      mode 600
+      mode '0600'
       variables({
         :rules => {},
         :chains => []
